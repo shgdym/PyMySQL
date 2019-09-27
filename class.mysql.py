@@ -37,7 +37,7 @@ class MySql:
 
     def close(self):
         self.cursor.close()
-
+# test
 if __name__ == "__main__":
     objMysql = MySql()
     sql = """CREATE TABLE EMPLOYEE (
