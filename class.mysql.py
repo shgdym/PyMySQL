@@ -27,9 +27,16 @@ class MySql:
         return results
 
     def getFirstRow(self, query_sql):
-        # TODO add limit 1 to sql
         res = self.getRows(query_sql)
+        if len(res) == 0:
+            return ""
         return res[0]
+
+    def getFirstRowColumn(self, query_sql):
+        row = self.getFirstRow(query_sql)
+        if row == "":
+            return ""
+        return row[0]
 
     def query(self, query_sql):
         self.cursor.execute(query_sql)
@@ -40,21 +47,22 @@ class MySql:
 
 if __name__ == "__main__":
     objMysql = MySql()
-    sql = """CREATE TABLE EMPLOYEE (
-             FIRST_NAME  CHAR(20) NOT NULL,
-             LAST_NAME  CHAR(20),
-             AGE INT,  
-             SEX CHAR(1),
-             INCOME FLOAT )"""
-    objMysql.query(sql)
+    # sql = """CREATE TABLE EMPLOYEE (
+    #          FIRST_NAME  CHAR(20) NOT NULL,
+    #          LAST_NAME  CHAR(20),
+    #          AGE INT,
+    #          SEX CHAR(1),
+    #          INCOME FLOAT )"""
+    # objMysql.query(sql)
+    #
+    # sql = """INSERT INTO EMPLOYEE(FIRST_NAME,
+    #          LAST_NAME, AGE, SEX, INCOME)
+    #          VALUES ('Mac', 'Mohan', 20, 'M', 2000),('john', 'Mohan', 22, 'W', 1000)"""
+    # objMysql.query(sql)
 
-    sql = """INSERT INTO EMPLOYEE(FIRST_NAME,
-             LAST_NAME, AGE, SEX, INCOME)
-             VALUES ('Mac', 'Mohan', 20, 'M', 2000),('john', 'Mohan', 22, 'W', 1000)"""
-    objMysql.query(sql)
-
-    sql = """SELECT *
-             FROM EMPLOYEE"""
-    res = objMysql.getRows(sql)
+    sql = """SELECT age
+             FROM EMPLOYEE
+             where age >55"""
+    res = objMysql.getFirstRowColumn(sql)
     print(res)
     exit()
